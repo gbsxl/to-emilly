@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Emilly 💖</title>
+    <style>
+        /* Estilos do arquivo 2 */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffe4e1;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        .gif-container {
+            position: relative;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #d63384;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+        }
+        .hidden-message {
+            font: bolder;
+            display: none;
+            font-size: 18px;
+            color: #d63384;
+        }
+        .switch-button, .dont-click {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #ff66b2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        /* Estilos do player Spotify (arquivo 1) adaptado */
+        .spotify-player {
+          width: 90%;
+          max-width: 620px;
+          background: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          display: flex;
+          align-items: center;
+          padding: 5px 10px;
+          gap: 10px;
+          margin: 20px auto  auto;
+        }
+        .player__left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .player__cover {
+          width: 40px;
+          height: 40px;
+          border-radius: 4px;
+          object-fit: cover;
+        }
+        .player__info {
+          text-align: left;
+        }
+        .player__title {
+          font-size: 14px;
+          font-weight: bold;
+          color: #000;
+        }
+        .player__artist {
+          font-size: 12px;
+          color: #333;
+        }
+        .player__center {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .player__controls {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .control-btn {
+          background: none;
+          border: none;
+          font-size: 16px;
+          cursor: pointer;
+          color: #000;
+        }
+        .player__progress-container {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin-top: 5px;
+        }
+        .progress-bar {
+          flex: 1;
+          height: 5px;
+          background: #ffffff;
+          border-radius: 3px;
+          position: relative;
+          overflow: hidden;
+          border: 1px solid #ffe4e1;
+        }
+        .progress {
+          height: 100%;
+          width: 0%;
+          background: #ffe4e1;
+          border-radius: 3px;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        .time {
+          font-size: 12px;
+          color: #000;
+        }
+        .player__right {
+          display: flex;
+          align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Conteúdo do arquivo 2 -->
+    <div class="container">
+        <h1>for Emilly, my kitty 💖</h1>
+        <div class="gif-container">
+            <img id="gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
+        </div>
+        <p id="message">Good Women's Day, but, you know... <br> You're my favorite girl in the whole world! 😻</p>
+        <button class="switch-button" onclick="switchGif()">Trocar Imagem (clique, sério)</button>
+        <button class="dont-click" onclick="showHiddenMessage()">NÃO CLIQUE AQUI!</button>
+        <p id="hiddenMessage" class="hidden-message">Eu te amo teimosa!💖</p>
+    </div>
+
+    <!-- Player Spotify adaptado, agora abaixo do conteúdo -->
+    <div class="spotify-player">
+      <div class="player__left">
+        <!-- Substitua o src pela capa do álbum desejado -->
+        <img src="arctic.jpg" alt="Album Cover" class="player__cover">
+        <div class="player__info">
+          <p class="player__title">Baby I'm Yours</p>
+          <p class="player__artist">Arctic Monkeys</p>
+        </div>
+      </div>
+      <div class="player__center">
+        <div class="player__controls">
+          <button class="control-btn" id="prev-btn">&#9664;&#9664;</button>
+          <button class="control-btn" id="play-pause-btn">⏸️</button>
+          <button class="control-btn" id="next-btn">&#9654;&#9654;</button>
+        </div>
+        <div class="player__progress-container">
+          <span class="time" id="current-time">1:44</span>
+          <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+          </div>
+          <span class="time" id="duration">2:32</span>
+        </div>
+      </div>
+      <div class="player__right">
+        <!-- Espaço para controles adicionais, se necessário -->
+      </div>
+    </div>
+
+    <!-- Elemento de áudio (único para ambos) -->
+    <audio id="audio" autoplay loop>
+        <source src="baby-im-yours.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // Código do arquivo 2 para GIFs e mensagens
+        var gifs = [
+            "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3dtYmdldmhoaWptcGM5YnByMnJwbDlncXI0cjd0ZW0ydThhbWV1MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1FkCqpyObTuo0/giphy.gif",
+            "https://media.giphy.com/media/x9MA8tlvFL1q1R25Kj/giphy.gif",
+            "https://media4.giphy.com/media/gZakNSSh3zAi3QK6XS/giphy.gif"
+        ];
+        var currentGif = 0;
+        function switchGif() {
+            currentGif = (currentGif + 1) % gifs.length;
+            document.getElementById("gif").src = gifs[currentGif];
+        }
+        function showHiddenMessage() {
+            document.getElementById("message").style.display = "none";
+            document.getElementById("hiddenMessage").style.display = "block";
+        }
+
+        // Código do player Spotify adaptado (arquivo 1)
+        const audio = document.getElementById('audio');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const progressBar = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+
+        // Define o intervalo de loop: 1:44 (104s) até 2:32 (152s)
+        const startTime = 104;
+        const endTime = 152;
+        
+        // Inicia o áudio no tempo desejado
+        audio.currentTime = startTime;
+        
+        audio.addEventListener('timeupdate', () => {
+          if (audio.currentTime >= endTime) {
+            audio.currentTime = startTime;
+          }
+          const progressPercent = ((audio.currentTime - startTime) / (endTime - startTime)) * 100;
+          progressBar.style.width = progressPercent + '%';
+          
+          // Atualiza o tempo atual exibido
+          let minutes = Math.floor(audio.currentTime / 60);
+          let seconds = Math.floor(audio.currentTime % 60);
+          if (seconds < 10) seconds = '0' + seconds;
+          currentTimeEl.textContent = minutes + ':' + seconds;
+        });
+
+        playPauseBtn.addEventListener('click', () => {
+          if (audio.paused) {
+            audio.play();
+            playPauseBtn.textContent = '⏸️';
+          } else {
+            audio.pause();
+            playPauseBtn.textContent = '▶️';
+          }
+        });
+        
+        // Define a duração exibida como o final do trecho
+        let durMinutes = Math.floor(endTime / 60);
+        let durSeconds = Math.floor(endTime % 60);
+        if (durSeconds < 10) durSeconds = '0' + durSeconds;
+        durationEl.textContent = durMinutes + ':' + durSeconds;
+    </script>
+</body>
+</html>
